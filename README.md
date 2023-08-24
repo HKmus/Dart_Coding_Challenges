@@ -1,2 +1,2 @@
 # Dart_Coding_Challenges
-30days Dart Coding 
+this repository is going to hold the 30-day Dart Coding Challenges
