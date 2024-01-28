@@ -27,7 +27,7 @@ void main() {
           playerMove == 'Scissors' && computerMove == 'Paper') {
         print('You won');
       } else {
-        print('You\'ve lose');
+        print('You\'ve lost');
       }
     } else if (input == 'q') {
       break;
