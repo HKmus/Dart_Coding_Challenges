@@ -62,7 +62,7 @@ void main() {
     stdout.write(
         'what do you want to do? (v)iew items, (a)dd item, (c)heckout: ');
     final line = stdin.readLineSync();
-
+    
     switch (line) {
       case 'v':
         // TODO
@@ -85,7 +85,7 @@ Product? chooseProduct() {
   final productList = allProducts.map((product) => product.displayName);
   productList.forEach((item) => print(item));
   stdout.write('Your choice: ');
-  final input = stdin.readLineSync();Product
+  final input = stdin.readLineSync();
 
   for (var product in allProducts) {
     if (product.initial == input) {
