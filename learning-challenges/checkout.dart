@@ -121,7 +121,7 @@ bool checkout(Cart cart) {
 
   if (amount >= cart.total) {
     print(
-        'Payment is successful. \nChange: ${(amount - cart.total).toStringAsFixed(2)}');
+        'Payment is successful. \nChange: \$${(amount - cart.total).toStringAsFixed(2)}');
     return true;
   }
   print('Not enough cash.');
