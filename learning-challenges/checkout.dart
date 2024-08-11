@@ -19,7 +19,8 @@ class Item {
   double get price => quantity * product.price;
 
   @override
-  String toString() => '$quantity x ${product.name}: $price';
+  String toString() =>
+      '$quantity x ${product.name}: ${price.toStringAsFixed(1)}';
 }
 
 class Cart {
@@ -34,6 +35,8 @@ class Cart {
     }
   }
 
+  bool get isEmpty => _items.isEmpty;
+
   double get total => _items.values
       .map((e) => e.price)
       .reduce((value, element) => value + element);
@@ -43,7 +46,9 @@ class Cart {
     if (_items.isEmpty) {
       return 'Cart is empty';
     } else {
-      return _items.values.map((item) => item.toString()).join('\n');
+      final itemizedList =
+          _items.values.map((item) => item.toString()).join('\n');
+      return '------\n$itemizedList\nTotal: \$${total.toStringAsFixed(1)}\n------';
     }
   }
 }
@@ -58,26 +63,30 @@ const allProducts = [
 
 void main() {
   final cart = Cart();
+  var isComplete = false;
+
   while (true) {
-    stdout.write(
-        'what do you want to do? (v)iew items, (a)dd item, (c)heckout: ');
+    stdout
+        .write('what do you want to do? (v)iew cart, (a)dd item, (c)heckout: ');
     final line = stdin.readLineSync();
-    
+
     switch (line) {
       case 'v':
-        // TODO
+        print(cart);
         break;
       case 'a':
         final product = chooseProduct();
         if (product != null) cart.addToCart(product);
-        print('$cart\nTotal: \$${cart.total.toStringAsFixed(1)}');
+        print(cart);
         break;
       case 'c':
-        // TODO
+        isComplete = checkout(cart);
         break;
       default:
         print('Invalide input');
     }
+
+    if (isComplete) break;
   }
 }
 
@@ -94,4 +103,27 @@ Product? chooseProduct() {
   }
   print('Not found');
   return null;
+}
+
+bool checkout(Cart cart) {
+  if (cart.isEmpty) {
+    print('Cart is empty');
+    return false;
+  }
+  print(cart);
+
+  stdout.write('Enter payment amount: ');
+  final amount = double.tryParse(stdin.readLineSync() ?? '');
+  if (amount == null) {
+    print('Please enter a valid amount.');
+    return false;
+  }
+
+  if (amount >= cart.total) {
+    print(
+        'Paiment is successful. \nChange: ${(amount - cart.total).toStringAsFixed(2)}');
+    return true;
+  }
+  print('Not enough cash.');
+  return false;
 }
